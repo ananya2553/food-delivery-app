@@ -1,0 +1,81 @@
+:root {
+  --primary-color: #ff4c24; /* Hamara brand color */
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  color: #494949;
+}
+
+.app-content {
+  display: flex;
+  align-items: start;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #a9a9a9;
+}
+.price-input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    padding-left: 10px;
+    max-width: 120px;
+    background: white;
+}
+
+.price-input-container span {
+    color: #494949;
+    font-weight: 500;
+}
+
+.price-input-container input {
+    border: none;
+    padding: 10px;
+    outline: none;
+    width: 100%;
+}
+.app-content {
+    display: flex; /* Isse Sidebar aur Page side-by-side aa jayenge */
+    align-items: flex-start;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #a9a9a9;
+}
+.app-content {
+    display: flex; /* Sabse important: Sidebar aur Form ko side-by-side layega */
+    align-items: flex-start;
+    width: 100%;
+}
+
+.add {
+    width: 70%;
+    margin-left: max(5vw, 25px);
+    margin-top: 50px;
+    color: #6d6d6d;
+    font-size: 16px;
+    flex-grow: 1;        /* Isse Add panel bachi hui puri jagah le lega */
+    padding: 40px;       /* Thoda margin sidebar se door karne ke liye */
+    margin-top: 0px;     /* Niche bhagne se rokne ke liye ise 0 rakhein */
+
+}
+.app-content {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 100vh;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #a9a9a9;
+    margin: 0;
+}

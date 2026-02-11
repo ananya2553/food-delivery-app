@@ -1,0 +1,19 @@
+/* Home page ke components ke beech gap maintain karne ke liye */
+.home {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Agar aapne Home.jsx mein parent div ko class='home' di hai */
+div > .header, 
+div > .explore-menu, 
+div > .food-display {
+    margin-bottom: 2rem;
+}
+
+/* Desktop par margin adjust karne ke liye */
+@media (min-width: 1050px) {
+    .home {
+        padding: 0 5%;
+    }
+}
