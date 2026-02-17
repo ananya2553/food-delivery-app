@@ -7,6 +7,11 @@
     animation: fadeIn 1s;
 }
 
+.food-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
 .food-item-image {
     width: 100%;
     border-radius: 15px 15px 0px 0px;
@@ -25,11 +30,11 @@
 
 .food-item-name-rating p {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .food-item-name-rating img {
-    width: 70px; /* Stars ka size */
+    width: 70px;
 }
 
 .food-item-desc {
@@ -44,10 +49,6 @@
     margin: 10px 0px;
 }
 
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
 .food-item-img-container {
     position: relative;
 }
@@ -75,25 +76,4 @@
 
 .food-item-counter img {
     width: 30px;
-    cursor: pointer;
-}
-.food-item-counter {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px;
-    border-radius: 50px;
-    background-color: white; /* Background white hai toh text dark hona chahiye */
-}
-
-.food-item-counter img {
-    width: 30px;
-    cursor: pointer;
-}
-
-.food-item-counter p {
-    font-size: 16px;
 }

@@ -4,29 +4,22 @@ import { assets } from '../../assets/assets'
 import { StoreContext } from '../../context/StoreContext'
 
 const FoodItem = ({ id, name, price, description, image }) => {
-    
-    // Context se functions aur state nikalna
-    const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
+
+    const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
 
     return (
         <div className='food-item'>
             <div className="food-item-img-container">
-                <img className='food-item-image' src={image} alt="" />
-                
-                {/* Condition: Agar cartItems[id] nahi hai toh sirf '+' dikhao */}
+                <img className='food-item-image' src={url + "/images/" + image} alt="" />
                 {!cartItems[id]
                     ? <img className='add' onClick={() => addToCart(id)} src={assets.add_icon_white} alt="" />
                     : <div className='food-item-counter'>
                         <img onClick={() => removeFromCart(id)} src={assets.remove_icon_red} alt="" />
-                        
-                        {/* Number display: Iska color black rakha hai taaki white background par dikhe */}
-                        <p style={{color: "#49557e", fontWeight: "600", margin: "0px 10px"}}>{cartItems[id]}</p>
-                        
+                        <p>{cartItems[id]}</p>
                         <img onClick={() => addToCart(id)} src={assets.add_icon_green} alt="" />
                     </div>
                 }
             </div>
-            
             <div className="food-item-info">
                 <div className="food-item-name-rating">
                     <p>{name}</p>

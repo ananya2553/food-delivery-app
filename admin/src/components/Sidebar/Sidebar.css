@@ -1,8 +1,7 @@
 .sidebar {
     width: 18%;
     min-height: 100vh;
-    border: 1.5px solid #a9a9a9;
-    border-top: none;
+    border-right: 1.5px solid #a9a9a9;
     font-size: max(1vw, 10px);
 }
 
@@ -21,28 +20,18 @@
     border: 1px solid #a9a9a9;
     border-right: 0;
     padding: 8px 10px;
-    border-radius: 3px 0 0 3px;
+    border-radius: 3px 0px 0px 3px;
     cursor: pointer;
+    text-decoration: none;
+    color: #282828;
 }
 
-.sidebar-option p {
-    display: block; /* Mobile responsiveness ke liye kal change karenge */
+.sidebar-option:hover {
+    background-color: #fff4f2;
+    border-color: tomato;
 }
 
-/* Active state jab hum link par click karenge */
 .sidebar-option.active {
-    background-color: #fff9f2;
-    border-color: #ff4c24;
-}
-.sidebar {
-    width: 18%; /* Form ko baki 82% jagah milegi */
-    min-height: 100vh;
-    border: 1.5px solid #a9a9a9;
-    border-top: none;
-}
-.sidebar {
-    width: 18%; /* Isse kam hi rakhein */
-    min-height: 100vh;
-    border: 1.5px solid #a9a9a9;
-    border-top: none;
+    background-color: #fff4f2;
+    border-color: tomato;
 }

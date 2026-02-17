@@ -3,14 +3,34 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
-// Token banane ka function (Encapsulation)
+// Token banane ka function
 const createToken = (id) => {
-    return jwt.sign({ id }, "secret_key"); // Abhi ke liye secret_key rakhte hain
+    return jwt.sign({ id }, process.env.JWT_SECRET || "random#secret");
 }
 
 // Login User
 const loginUser = async (req, res) => {
-    // Ye hum registration ke baad likhenge
+    const { email, password } = req.body;
+    try {
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.json({ success: false, message: "User Doesn't exist" })
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.json({ success: false, message: "Invalid credentials" })
+        }
+
+        const token = createToken(user._id);
+        res.json({ success: true, token })
+
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error" })
+    }
 }
 
 // Register User

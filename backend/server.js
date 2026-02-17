@@ -1,29 +1,58 @@
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./config/db.js";
-import foodRouter from "./routes/foodroute.js"
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
+import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
+import chatRouter from "./routes/chatRoute.js";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { setSocketIo } from "./controllers/orderController.js";
 
 // App Config
 const app = express();
-const port = 4000;
+const port = 4001;
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
 // Database Connection
-// Ye function db.js se connection initiate karega
 connectDB();
 
+// Socket.io Setup
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*", // Allow all origins for dev simplicity
+        methods: ["GET", "POST"]
+    }
+});
+
+// Pass io instance to controller
+setSocketIo(io);
+
+io.on("connection", (socket) => {
+    console.log("New Client Connected: " + socket.id);
+    socket.on("disconnect", () => {
+        console.log("Client Disconnected");
+    });
+});
+
 // API Endpoints
-app.use("/api/food", foodRouter); // Route file yahan map hoti hai
-app.use("/images", express.static('uploads')); // Images access karne ke liye
+app.use("/api/food", foodRouter);
+app.use("/images", express.static('uploads'));
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
+app.use("/api/chat", chatRouter);
 
 app.get("/", (req, res) => {
     res.send("API Working");
 });
 
-// Server Start
-app.listen(port, () => {
+// Server Start (Using httpServer instead of app)
+httpServer.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });

@@ -1,6 +1,6 @@
 .add {
     width: 70%;
-    margin-left: max(5vw, 25px);
+    margin-left: 25px;
     margin-top: 50px;
     color: #6d6d6d;
     font-size: 16px;
@@ -10,16 +10,28 @@
     gap: 20px;
 }
 
-.add-img-upload img {
-    width: 120px;
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.add-product-name, .add-product-description {
+.add-img-upload img {
+    width: 120px;
+    cursor: pointer;
+}
+
+.add-product-name,
+.add-product-description {
     width: max(40%, 280px);
 }
 
-.add-product-name input, .add-product-description textarea {
+.add-product-name input,
+.add-product-description textarea {
     padding: 10px;
+    background-color: transparent;
+    border: 1px solid #7a7a7a;
+    border-radius: 4px;
 }
 
 .add-category-price {
@@ -27,9 +39,13 @@
     gap: 30px;
 }
 
-.add-category select, .add-price input {
+.add-category select,
+.add-price input {
     max-width: 120px;
     padding: 10px;
+    background-color: transparent;
+    border: 1px solid #7a7a7a;
+    border-radius: 4px;
 }
 
 .add-btn {
@@ -39,46 +55,9 @@
     background-color: black;
     color: white;
     cursor: pointer;
-}
-
-.flex-col {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.add {
-    width: 70%;
-    margin-left: max(5vw, 25px);
-    margin-top: 25px; /* Pehle 50px tha, ab thoda upar aayega */
-    color: #6d6d6d;
-}
-.price-input-container {
-    display: flex;
-    align-items: center;
-    border: 1px solid #c9c9c9;
     border-radius: 4px;
-    padding-left: 10px; /* Dollar aur box ke beech space */
-    width: 120px;       /* Fixed width taaki bahar na bhage */
-    background: white;
 }
 
-.currency-symbol {
-    color: #494949;
-    font-weight: 500;
-    margin-right: 5px; /* Dollar aur number ke beech gap */
-}
-
-.price-input-container input {
-    border: none;      /* Inner border hataiye */
-    padding: 10px 5px;
-    outline: none;     /* Focus hone par blue line nahi aayegi */
-    width: 100%;       /* Container ki bachi hui jagah lega */
-    font-size: 16px;
-}
-.add {
-    flex: 1; /* Ye bachi hui 82% width apne aap le lega */
-    padding: 30px 50px;
-    color: #6d6d6d;
-    display: flex;
-    flex-direction: column;
+.add-btn:hover {
+    background-color: #333;
 }

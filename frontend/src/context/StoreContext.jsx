@@ -1,32 +1,45 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
-import { food_list } from "../assets/assets";
 
-export const StoreContext = createContext(null)
+export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
 
     const [cartItems, setCartItems] = useState({});
+    const url = "http://localhost:4001";
+    const [token, setToken] = useState("");
+    const [food_list, setFoodList] = useState([]);
 
-    // 1. Add to Cart Logic
-    const addToCart = (itemId) => {
+    const addToCart = async (itemId) => {
+        console.log("addToCart called with ID:", itemId);
         if (!cartItems[itemId]) {
-            setCartItems((prev) => ({ ...prev, [itemId]: 1 }))
-        } else {
-            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }))
+            setCartItems((prev) => {
+                console.log("Adding new item to cart state");
+                return { ...prev, [itemId]: 1 }
+            })
+        }
+        else {
+            setCartItems((prev) => {
+                console.log("Incrementing item in cart state");
+                return { ...prev, [itemId]: prev[itemId] + 1 }
+            })
+        }
+        if (token) {
+            await axios.post(url + "/api/cart/add", { itemId }, { headers: { token } })
         }
     }
 
-    // 2. Remove from Cart Logic
-    const removeFromCart = (itemId) => {
+    const removeFromCart = async (itemId) => {
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
+        if (token) {
+            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } })
+        }
     }
 
-    // 3. Bill Calculation Logic (The Brain)
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                // food_list mein se wahi item find karna jiski id match ho
                 let itemInfo = food_list.find((product) => product._id === item);
                 totalAmount += itemInfo.price * cartItems[item];
             }
@@ -34,14 +47,53 @@ const StoreContextProvider = (props) => {
         return totalAmount;
     }
 
-    // Saare functions aur data ko export karna taaki puri app use kar sake
+    const fetchFoodList = async () => {
+        try {
+            const response = await axios.get(url + "/api/food/list");
+            if (response.data.success) {
+                setFoodList(response.data.data)
+            } else {
+                console.error("Error fetching food list:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error fetching food list:", error);
+        }
+    }
+
+    const loadCartData = async (token) => {
+        try {
+            const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
+            setCartItems(response.data.cartData);
+        } catch (error) {
+            console.error("Error loading cart data:", error);
+        }
+    }
+
+    useEffect(() => {
+        async function loadData() {
+            await fetchFoodList();
+            if (localStorage.getItem("token")) {
+                setToken(localStorage.getItem("token"));
+                await loadCartData(localStorage.getItem("token"));
+            }
+        }
+        loadData();
+    }, [])
+
+    const [searchQuery, setSearchQuery] = useState("");
+
     const contextValue = {
         food_list,
         cartItems,
         setCartItems,
         addToCart,
         removeFromCart,
-        getTotalCartAmount
+        getTotalCartAmount,
+        url,
+        token,
+        setToken,
+        searchQuery,
+        setSearchQuery
     }
 
     return (
