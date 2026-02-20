@@ -16,7 +16,7 @@ const addToCart = async (req, res) => {
         res.json({ success: true, message: "Added To Cart" });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error" });
+        res.json({ success: false, message: error.message });
     }
 }
 
@@ -34,7 +34,7 @@ const removeFromCart = async (req, res) => {
         res.json({ success: true, message: "Removed From Cart" });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error" });
+        res.json({ success: false, message: error.message });
     }
 }
 
@@ -42,11 +42,14 @@ const removeFromCart = async (req, res) => {
 const getCart = async (req, res) => {
     try {
         let userData = await userModel.findById(req.body.userId);
+        if (!userData) {
+            return res.json({ success: false, message: "User Not Found" });
+        }
         let cartData = await userData.cartData;
         res.json({ success: true, cartData });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error" });
+        res.json({ success: false, message: error.message });
     }
 }
 

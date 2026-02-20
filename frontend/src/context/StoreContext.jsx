@@ -10,6 +10,10 @@ const StoreContextProvider = (props) => {
     const [token, setToken] = useState("");
     const [food_list, setFoodList] = useState([]);
 
+    useEffect(() => {
+        console.log("food_list changed:", food_list);
+    }, [food_list]);
+
     const addToCart = async (itemId) => {
         console.log("addToCart called with ID:", itemId);
         if (!cartItems[itemId]) {
